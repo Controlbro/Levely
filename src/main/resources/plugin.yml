@@ -45,9 +45,25 @@ permissions:
     children:
       levely.admin.reload: true
       levely.admin.command: true
+      levely.admin.event.*: true
   levely.admin.reload:
     default: op
   levely.admin.command:
+    default: op
+  levely.admin.event.*:
+    default: op
+    children:
+      levely.admin.event.info: true
+      levely.admin.event.global: true
+      levely.admin.event.skill: true
+      levely.admin.event.clear: true
+  levely.admin.event.info:
+    default: op
+  levely.admin.event.global:
+    default: op
+  levely.admin.event.skill:
+    default: op
+  levely.admin.event.clear:
     default: op
   levely.bypass.cooldowns:
     default: op

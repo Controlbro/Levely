@@ -3,7 +3,7 @@ package com.controlbro.levely.manager;
 import com.controlbro.levely.LevelyPlugin;
 import com.controlbro.levely.model.PlayerProfile;
 import com.controlbro.levely.model.SkillType;
-import com.controlbro.levely.util.ChatUtil;
+import com.controlbro.levely.util.Msg;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
@@ -52,10 +52,18 @@ public class AbilityManager {
     public void activate(Player player, SkillType skill, String abilityKey, String displayName, int cooldownSeconds) {
         cooldowns.computeIfAbsent(player.getUniqueId(), key -> new HashMap<>())
             .put(abilityKey, Instant.now());
-        String message = plugin.getMessageManager().getString("abilities.activated")
-            .replace("%ability%", displayName);
-        player.sendMessage(ChatUtil.color(message));
+        Msg.send(player, "abilities.activated", "%ability%", displayName);
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 1.2f);
+    }
+
+    public void activateWithoutCooldown(Player player, String displayName) {
+        Msg.send(player, "abilities.activated", "%ability%", displayName);
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 1.2f);
+    }
+
+    public void startCooldown(Player player, String abilityKey) {
+        cooldowns.computeIfAbsent(player.getUniqueId(), key -> new HashMap<>())
+            .put(abilityKey, Instant.now());
     }
 
     public PlayerProfile getProfile(Player player) {
