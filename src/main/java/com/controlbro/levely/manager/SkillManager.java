@@ -4,7 +4,7 @@ import com.controlbro.levely.LevelyPlugin;
 import com.controlbro.levely.model.PlayerProfile;
 import com.controlbro.levely.model.SkillData;
 import com.controlbro.levely.model.SkillType;
-import com.controlbro.levely.util.ChatUtil;
+import com.controlbro.levely.util.Msg;
 import java.util.Locale;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -12,26 +12,51 @@ import org.bukkit.entity.Player;
 public class SkillManager {
     private final LevelyPlugin plugin;
     private final DataManager dataManager;
+    private final XpEventManager xpEventManager;
+    private final XpBossBarManager xpBossBarManager;
+    private final PartyManager partyManager;
 
-    public SkillManager(LevelyPlugin plugin, DataManager dataManager) {
+    public SkillManager(LevelyPlugin plugin, DataManager dataManager, XpEventManager xpEventManager,
+                        XpBossBarManager xpBossBarManager, PartyManager partyManager) {
         this.plugin = plugin;
         this.dataManager = dataManager;
+        this.xpEventManager = xpEventManager;
+        this.xpBossBarManager = xpBossBarManager;
+        this.partyManager = partyManager;
     }
 
     public void addXp(Player player, SkillType skill, double amount) {
+        addXp(player, skill, amount, 1.0);
+    }
+
+    public void addXp(Player player, SkillType skill, double amount, double otherMultiplier) {
         if (amount <= 0) {
             return;
         }
         PlayerProfile profile = dataManager.getOrCreateProfile(player.getUniqueId(), player.getName());
         SkillData data = profile.getSkillData(skill);
-        data.addXp(applyGlobalMultipliers(skill, amount));
+        double finalXp = applyGlobalMultipliers(player, skill, amount, otherMultiplier);
+        data.addXp(finalXp);
         levelUpIfNeeded(player, skill, data);
+        double required = xpRequired(data.getLevel());
+        xpBossBarManager.showXp(player, skill, data.getXp(), required, finalXp);
     }
 
-    private double applyGlobalMultipliers(SkillType skill, double amount) {
+    private double applyGlobalMultipliers(Player player, SkillType skill, double amount, double otherMultiplier) {
         double global = plugin.getConfig().getDouble("xp.globalMultiplier", 1.0);
         double perSkill = plugin.getConfig().getDouble("xp.perSkillMultiplier." + skill.getKey(), 1.0);
-        return amount * global * perSkill;
+        double eventGlobal = xpEventManager.getGlobalMultiplier();
+        double eventSkill = xpEventManager.getSkillMultiplier(skill);
+        double category = xpEventManager.getCategoryMultiplier(skill);
+        double partyBonus = getPartyBonus(player);
+        return amount * global * perSkill * eventGlobal * eventSkill * category * partyBonus * otherMultiplier;
+    }
+
+    private double getPartyBonus(Player player) {
+        if (partyManager == null) {
+            return 1.0;
+        }
+        return plugin.getConfig().getDouble("party.xpBonusMultiplier", 1.0);
     }
 
     private void levelUpIfNeeded(Player player, SkillType skill, SkillData data) {
@@ -60,10 +85,8 @@ public class SkillManager {
         if (!plugin.getConfig().getBoolean("general.levelUp.chat", true)) {
             return;
         }
-        String message = plugin.getConfig().getString("messages.chat.levelUp", "&a%skill% leveled up to %level%!");
-        message = message.replace("%skill%", skill.getKey())
-            .replace("%level%", String.valueOf(level));
-        player.sendMessage(ChatUtil.color(message));
+        Msg.send(player, "skills.levelUp", "%skill%", skill.getDisplayName(), "%level%", String.valueOf(level));
+        xpBossBarManager.showLevelUp(player, skill, level);
         String soundName = plugin.getConfig().getString("general.levelUp.sound", "ENTITY_PLAYER_LEVELUP");
         player.playSound(player.getLocation(), Sound.valueOf(soundName), 1.0f, 1.0f);
     }

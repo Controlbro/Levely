@@ -4,7 +4,7 @@ import com.controlbro.levely.LevelyPlugin;
 import com.controlbro.levely.manager.PartyManager;
 import com.controlbro.levely.model.Party;
 import com.controlbro.levely.model.PartyMode;
-import com.controlbro.levely.util.ChatUtil;
+import com.controlbro.levely.util.Msg;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -32,85 +32,82 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.playerOnly")));
+            Msg.send(sender, "errors.playerOnly");
             return true;
         }
         if (args.length == 0 || args[0].equalsIgnoreCase("info")) {
             Optional<Party> party = partyManager.getParty(player.getUniqueId());
             if (party.isEmpty()) {
-                sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.notInParty")));
+                Msg.send(sender, "errors.notInParty");
                 return true;
             }
             Party current = party.get();
-            sender.sendMessage(ChatUtil.color("&6Party: &e" + current.getName()));
-            sender.sendMessage(ChatUtil.color("&6Leader: &e" + Bukkit.getOfflinePlayer(current.getLeader()).getName()));
-            sender.sendMessage(ChatUtil.color("&6Members: &e" + current.getMembers().size()));
-            sender.sendMessage(ChatUtil.color("&6Level: &e" + current.getLevel()));
-            sender.sendMessage(ChatUtil.color("&6Locked: &e" + current.isLocked()));
+            Msg.send(sender, "party.info.name", "%party%", current.getName());
+            Msg.send(sender, "party.info.leader", "%leader%", Bukkit.getOfflinePlayer(current.getLeader()).getName());
+            Msg.send(sender, "party.info.members", "%count%", String.valueOf(current.getMembers().size()));
+            Msg.send(sender, "party.info.level", "%level%", String.valueOf(current.getLevel()));
+            Msg.send(sender, "party.info.locked", "%locked%", String.valueOf(current.isLocked()));
             return true;
         }
 
         switch (args[0].toLowerCase(Locale.ROOT)) {
             case "create" -> {
                 if (args.length < 2) {
-                    sender.sendMessage(ChatUtil.color("&cUsage: /party create <name> [password]"));
+                    Msg.send(sender, "party.usage.create");
                     return true;
                 }
                 if (partyManager.getParty(player.getUniqueId()).isPresent()) {
-                    sender.sendMessage(ChatUtil.color("&cYou are already in a party."));
+                    Msg.send(sender, "party.alreadyInParty");
                     return true;
                 }
                 String passwordHash = args.length > 2 ? hashPassword(args[2]) : null;
                 Party party = partyManager.createParty(player, args[1], passwordHash);
-                sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("party.created")
-                    .replace("%party%", party.getName())));
+                Msg.send(sender, "party.created", "%party%", party.getName());
                 return true;
             }
             case "invite" -> {
                 Optional<Party> party = partyManager.getParty(player.getUniqueId());
                 if (party.isEmpty()) {
-                    sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.notInParty")));
+                    Msg.send(sender, "errors.notInParty");
                     return true;
                 }
                 if (args.length < 2) {
-                    sender.sendMessage(ChatUtil.color("&cUsage: /party invite <player>"));
+                    Msg.send(sender, "party.usage.invite");
                     return true;
                 }
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target == null) {
-                    sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.invalidPlayer")));
+                    Msg.send(sender, "errors.invalidPlayer");
                     return true;
                 }
                 partyManager.invite(player, target, party.get());
-                sender.sendMessage(ChatUtil.color("&aInvite sent."));
+                Msg.send(sender, "party.inviteSent");
                 return true;
             }
             case "join" -> {
                 if (args.length < 2) {
-                    sender.sendMessage(ChatUtil.color("&cUsage: /party join <partyName> [password]"));
+                    Msg.send(sender, "party.usage.join");
                     return true;
                 }
                 Optional<Party> party = partyManager.acceptInvite(player);
                 if (party.isEmpty()) {
-                    sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.inviteExpired")));
+                    Msg.send(sender, "errors.inviteExpired");
                     return true;
                 }
                 Party targetParty = party.get();
                 targetParty.getMembers().add(player.getUniqueId());
-                partyManager.broadcast(targetParty, plugin.getMessageManager().getString("party.join")
-                    .replace("%player%", player.getName()));
+                partyManager.broadcast(targetParty, "party.join", "%player%", player.getName());
                 return true;
             }
             case "quit" -> {
                 Optional<Party> party = partyManager.getParty(player.getUniqueId());
                 if (party.isEmpty()) {
-                    sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.notInParty")));
+                    Msg.send(sender, "errors.notInParty");
                     return true;
                 }
                 Party current = party.get();
                 current.getMembers().remove(player.getUniqueId());
-                partyManager.broadcast(current, plugin.getMessageManager().getString("party.leave")
-                    .replace("%player%", player.getName()));
+                partyManager.broadcast(current, "party.leave", "%player%", player.getName());
                 if (current.getMembers().isEmpty()) {
                     partyManager.disband(current);
                 }
@@ -119,12 +116,12 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
             case "disband" -> {
                 Optional<Party> party = partyManager.getParty(player.getUniqueId());
                 if (party.isEmpty()) {
-                    sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.notInParty")));
+                    Msg.send(sender, "errors.notInParty");
                     return true;
                 }
                 Party current = party.get();
                 if (!current.getLeader().equals(player.getUniqueId())) {
-                    sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.notLeader")));
+                    Msg.send(sender, "errors.notLeader");
                     return true;
                 }
                 partyManager.disband(current);
@@ -133,16 +130,16 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
             case "mode" -> {
                 Optional<Party> party = partyManager.getParty(player.getUniqueId());
                 if (party.isEmpty()) {
-                    sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.notInParty")));
+                    Msg.send(sender, "errors.notInParty");
                     return true;
                 }
                 if (args.length < 2) {
-                    sender.sendMessage(ChatUtil.color("&cUsage: /party mode <mode>"));
+                    Msg.send(sender, "party.usage.mode");
                     return true;
                 }
                 Party current = party.get();
                 if (!current.getLeader().equals(player.getUniqueId())) {
-                    sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.notLeader")));
+                    Msg.send(sender, "errors.notLeader");
                     return true;
                 }
                 PartyMode mode = PartyMode.valueOf(args[1].toUpperCase(Locale.ROOT));
@@ -150,19 +147,19 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             case "help" -> {
-                sender.sendMessage(ChatUtil.color("&6Party Commands:"));
-                sender.sendMessage(ChatUtil.color("&e/party info"));
-                sender.sendMessage(ChatUtil.color("&e/party create <name> [password]"));
-                sender.sendMessage(ChatUtil.color("&e/party invite <player>"));
-                sender.sendMessage(ChatUtil.color("&e/party join <partyName> [password]"));
-                sender.sendMessage(ChatUtil.color("&e/party quit"));
-                sender.sendMessage(ChatUtil.color("&e/party disband"));
-                sender.sendMessage(ChatUtil.color("&e/pc"));
-                sender.sendMessage(ChatUtil.color("&e/ptp <member>"));
+                Msg.send(sender, "party.help.header");
+                Msg.send(sender, "party.help.info");
+                Msg.send(sender, "party.help.create");
+                Msg.send(sender, "party.help.invite");
+                Msg.send(sender, "party.help.join");
+                Msg.send(sender, "party.help.quit");
+                Msg.send(sender, "party.help.disband");
+                Msg.send(sender, "party.help.chat");
+                Msg.send(sender, "party.help.teleport");
                 return true;
             }
             default -> {
-                sender.sendMessage(ChatUtil.color("&cUnknown party command."));
+                Msg.send(sender, "party.unknownCommand");
                 return true;
             }
         }
