@@ -1,0 +1,51 @@
+prefix: "&6[Levely]&r "
+
+errors:
+  noPermission: "&cYou do not have permission."
+  playerOnly: "&cThis command can only be used by players."
+  invalidPlayer: "&cPlayer not found."
+  invalidSkill: "&cUnknown skill."
+  featureLocked: "&cThat party feature is locked until level %level%."
+  wrongPassword: "&cIncorrect party password."
+  notInParty: "&cYou are not in a party."
+  notLeader: "&cOnly the party leader can do that."
+  partyFull: "&cThat party is full."
+  inviteExpired: "&cThat invite has expired."
+  teleportCooldown: "&cTeleport is on cooldown for %seconds%s."
+  teleportCombat: "&cYou cannot teleport while in combat."
+  teleportWorldBlocked: "&cParty teleport is blocked in this world."
+
+skills:
+  levelUp: "&a%skill% leveled up to %level%!"
+
+abilities:
+  ready: "&aAbility Ready"
+  activated: "&6%ability% activated"
+  ended: "&c%ability% wore off"
+  cooldown: "&cCooldown: %seconds%s"
+
+party:
+  invite: "&eYou have been invited to &6%party%&e by &6%player%&e."
+  join: "&a%player% joined the party."
+  leave: "&e%player% left the party."
+  disband: "&cYour party has been disbanded."
+  created: "&aParty &6%party%&a created."
+  leaderChanged: "&e%player% is now the party leader."
+  locked: "&cParty locked."
+  unlocked: "&aParty unlocked."
+  passwordSet: "&aParty password set."
+  modeSet: "&eParty mode set to &6%mode%&e."
+  chatFormat: "&9[Party]&r %player%: %message%"
+
+admin:
+  reloadComplete: "&aLevely config reloaded."
+  xpAdded: "&aAdded %amount% xp to %player%'s %skill%."
+  xpSet: "&aSet %player%'s %skill% xp to %amount%."
+  levelAdded: "&aAdded %amount% levels to %player%'s %skill%."
+  levelSet: "&aSet %player%'s %skill% level to %level%."
+  reset: "&aReset %player%'s %skill%."
+  powerLevel: "&e%player%'s power level: %power%."
+  partyLevelSet: "&aSet party %party% level to %level%."
+  partyDisbanded: "&cDisbanded party %party%."
+  debug:
+    header: "&eCooldowns for %player%:"
