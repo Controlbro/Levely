@@ -4,6 +4,7 @@ import com.controlbro.levely.LevelyPlugin;
 import com.controlbro.levely.manager.DataManager;
 import com.controlbro.levely.manager.PartyManager;
 import com.controlbro.levely.manager.SkillManager;
+import com.controlbro.levely.manager.XpEventManager;
 import com.controlbro.levely.model.PlayerProfile;
 import com.controlbro.levely.model.SkillData;
 import com.controlbro.levely.model.SkillType;
