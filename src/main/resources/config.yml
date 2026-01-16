@@ -1,0 +1,413 @@
+# Levely configuration
+# Target: Paper 1.21.11
+
+version: 1
+
+general:
+  powerLevel:
+    enabled: true
+  enabledWorlds:
+    mode: WHITELIST # WHITELIST or BLACKLIST
+    worlds: [world, world_nether, world_the_end]
+  allowCreativeXp: false
+  actionBarMessages: true
+  chatMessages: true
+  levelUp:
+    sound: ENTITY_PLAYER_LEVELUP
+    actionBar: true
+    chat: true
+  cooldownBypassPermission: levely.bypass.cooldowns
+  exploitBypassPermission: levely.bypass.exploits
+  autosave:
+    enabled: true
+    intervalSeconds: 300
+  afk:
+    enabled: true
+    idleMinutes: 5
+    movementRadius: 2.5
+
+xp:
+  formula:
+    type: MCMO_LIKE # LINEAR | EXPONENTIAL | MCMO_LIKE
+    base: 100
+    multiplier: 1.08
+    exponent: 1.2
+  globalMultiplier: 1.0
+  perSkillMultiplier:
+    mining: 1.0
+    woodcutting: 1.0
+    herbalism: 1.0
+    excavation: 1.0
+    fishing: 1.0
+    unarmed: 1.0
+    archery: 1.0
+    swords: 1.0
+    axes: 1.0
+    taming: 1.0
+    repair: 1.0
+    acrobatics: 1.0
+    alchemy: 1.0
+    salvage: 1.0
+    smelting: 1.0
+  antiExploit:
+    trackPlacedBlocks: true
+    placedBlockExpireMinutes: 120
+    spawnerMobMultiplier: 0.1
+    repeatedKill:
+      enabled: true
+      decayPerKill: 0.15
+      resetMinutes: 10
+  mobMultipliers:
+    WITHER_SKELETON: 4.0
+    CREEPER: 4.0
+    ELDER_GUARDIAN: 4.0
+    GIANT: 4.0
+    PHANTOM: 4.0
+    CAVE_SPIDER: 3.0
+    SILVERFISH: 3.0
+    BLAZE: 3.0
+    HUSK: 3.0
+    EVOKER: 3.0
+    VINDICATOR: 3.0
+    SKELETON: 3.0
+    GHAST: 3.0
+    ZOMBIFIED_PIGLIN: 3.0
+    GUARDIAN: 3.0
+    ENDERMITE: 2.0
+    SPIDER: 2.0
+    ZOMBIE: 2.0
+    SLIME: 2.0
+    MAGMA_CUBE: 2.0
+    IRON_GOLEM: 2.0
+    ZOMBIE_VILLAGER: 2.0
+    SHULKER: 2.0
+    ENDERMAN: 1.0
+    ANIMALS: 1.0
+    ENDER_DRAGON: 0.0
+    WITHER: 0.0
+    WITCH: 0.0
+
+skills:
+  enabled:
+    mining: true
+    woodcutting: true
+    herbalism: true
+    excavation: true
+    fishing: true
+    unarmed: true
+    archery: true
+    swords: true
+    axes: true
+    taming: true
+    repair: true
+    acrobatics: true
+    alchemy: true
+    salvage: true
+    smelting: true
+
+abilities:
+  blockedInCreative: true
+  blockedWorlds: []
+  warmup:
+    useSneakPrepare: true
+    prepareDurationSeconds: 4
+  actives:
+    unarmed:
+      berserk:
+        enabled: true
+        displayName: Berserk
+        aliases: [Beserk]
+        requiredLevel: 50
+        durationSeconds: 12
+        cooldownSeconds: 240
+        damageMultiplier: 1.5
+        disarmChanceBonus: 0.05
+    herbalism:
+      greenTerra:
+        enabled: true
+        requiredLevel: 50
+        durationSeconds: 10
+        cooldownSeconds: 120
+      greenThumb:
+        enabled: true
+        requiredLevel: 25
+        durationSeconds: 0
+        cooldownSeconds: 0
+    excavation:
+      gigaDrillBreaker:
+        enabled: true
+        requiredLevel: 50
+        durationSeconds: 12
+        cooldownSeconds: 240
+    woodcutting:
+      treeFeller:
+        enabled: true
+        requiredLevel: 50
+        durationSeconds: 10
+        cooldownSeconds: 240
+    axes:
+      skullSplitter:
+        enabled: true
+        requiredLevel: 50
+        durationSeconds: 12
+        cooldownSeconds: 240
+    mining:
+      superBreaker:
+        enabled: true
+        requiredLevel: 50
+        durationSeconds: 12
+        cooldownSeconds: 240
+    swords:
+      serratedStrike:
+        enabled: true
+        requiredLevel: 50
+        durationSeconds: 12
+        cooldownSeconds: 240
+
+passives:
+  messageCooldownSeconds: 3
+  unarmed:
+    deflectArrows:
+      enabled: true
+      baseChance: 0.05
+      chancePerLevel: 0.0005
+      cap: 0.3
+      cooldownSeconds: 3
+    disarm:
+      enabled: true
+      baseChance: 0.02
+      chancePerLevel: 0.0003
+      cap: 0.25
+      cooldownSeconds: 5
+      inventoryFirst: true
+    increasedDamage:
+      enabled: true
+      baseBonus: 0.0
+      bonusPerLevel: 0.002
+      cap: 0.5
+  archery:
+    retrieveArrow:
+      enabled: true
+      baseChance: 0.2
+      chancePerLevel: 0.002
+      cap: 0.8
+      cooldownSeconds: 2
+    increasedDamage:
+      enabled: true
+      baseBonus: 0.0
+      bonusPerLevel: 0.0015
+      cap: 0.5
+  excavation:
+    treasureHunt:
+      enabled: true
+      baseChance: 0.02
+      chancePerLevel: 0.0004
+      cap: 0.35
+      cooldownSeconds: 1
+      blocks: [DIRT, SAND, GRAVEL, CLAY, SOUL_SAND, SOUL_SOIL]
+      loot:
+        IRON_NUGGET: 5
+        GOLD_NUGGET: 3
+        BONE: 2
+        GLOW_BERRIES: 1
+  herbalism:
+    replant:
+      enabled: true
+      baseChance: 0.15
+      chancePerLevel: 0.001
+      cap: 0.85
+      cooldownSeconds: 1
+      crops: [WHEAT, CARROTS, POTATOES, NETHER_WART]
+    doubleDrops:
+      enabled: true
+      baseChance: 0.05
+      chancePerLevel: 0.001
+      cap: 0.5
+      cooldownSeconds: 1
+  axes:
+    criticalStrike:
+      enabled: true
+      baseChance: 0.05
+      chancePerLevel: 0.0005
+      cap: 0.35
+      cooldownSeconds: 2
+    doubleDrops:
+      enabled: true
+      baseChance: 0.05
+      chancePerLevel: 0.0005
+      cap: 0.4
+      cooldownSeconds: 2
+  mining:
+    doubleDrops:
+      enabled: true
+      baseChance: 0.08
+      chancePerLevel: 0.0006
+      cap: 0.5
+      cooldownSeconds: 2
+      respectSilkTouch: true
+    tntBonus:
+      enabled: false
+      xpMultiplier: 0.35
+      doubleDropChanceBonus: 0.1
+  swords:
+    counterAttack:
+      enabled: true
+      baseChance: 0.05
+      chancePerLevel: 0.0005
+      cap: 0.35
+      cooldownSeconds: 2
+      reflectPercent: 0.25
+    increasedDamage:
+      enabled: true
+      baseBonus: 0.0
+      bonusPerLevel: 0.0015
+      cap: 0.5
+  acrobatics:
+    roll:
+      enabled: true
+      baseChance: 0.05
+      chancePerLevel: 0.0007
+      cap: 0.6
+      cooldownSeconds: 2
+    dodge:
+      enabled: true
+      baseChance: 0.04
+      chancePerLevel: 0.0006
+      cap: 0.5
+      cooldownSeconds: 2
+      xpAward: 300
+  taming:
+    wolfImprovements:
+      enabled: true
+      healthBonusPerLevel: 0.02
+      damageBonusPerLevel: 0.015
+      damageReductionPerLevel: 0.01
+      fastFoodChancePerLevel: 0.002
+      maxBonus: 0.5
+  smelting:
+    fluxMining:
+      enabled: true
+      baseChance: 0.05
+      chancePerLevel: 0.0005
+      cap: 0.35
+      cooldownSeconds: 1
+      extraIngotMultiplier: 1.0
+      xpBonusMultiplier: 0.2
+
+skillXp:
+  mining:
+    STONE: 5
+    COAL_ORE: 10
+    COPPER_ORE: 12
+    IRON_ORE: 16
+    GOLD_ORE: 24
+    DIAMOND_ORE: 40
+    EMERALD_ORE: 45
+    NETHER_QUARTZ_ORE: 15
+    NETHER_GOLD_ORE: 18
+  woodcutting:
+    OAK_LOG: 10
+    SPRUCE_LOG: 10
+    BIRCH_LOG: 10
+    JUNGLE_LOG: 12
+    ACACIA_LOG: 12
+    DARK_OAK_LOG: 12
+    MANGROVE_LOG: 14
+    CHERRY_LOG: 14
+  herbalism:
+    WHEAT: 10
+    CARROTS: 8
+    POTATOES: 8
+    NETHER_WART: 12
+    COCOA: 10
+  excavation:
+    DIRT: 4
+    SAND: 4
+    GRAVEL: 5
+    CLAY: 6
+    SOUL_SAND: 6
+  fishing:
+    fish: 40
+    junk: 10
+    treasure: 80
+  smelting:
+    IRON_ORE: 20
+    GOLD_ORE: 25
+    COPPER_ORE: 16
+    NETHER_GOLD_ORE: 18
+    ANCIENT_DEBRIS: 50
+
+combatXp:
+  base:
+    swords: 2.0
+    axes: 2.0
+    unarmed: 1.5
+    archery: 2.0
+    taming: 2.0
+  acrobatics:
+    fallDamageMultiplier: 115
+    rollMultiplier: 80
+    dodgeXp: 300
+
+party:
+  maxSize: 20
+  invite:
+    expireSeconds: 60
+    inviteBypassPassword: false
+  leveling:
+    enabled: true
+    xpFromMemberXpPercent: 10
+    passiveXpPerMinutePerMember: 2
+  unlocks:
+    partyChat: 1
+    partyTeleport: 2
+    alliances: 5
+    itemShare: 8
+    xpShare: 10
+  xpShare:
+    enabled: true
+    radius: 75
+    bonusTable:
+      1: 0.10
+      2: 0.15
+      3: 0.20
+      9: 0.45
+      10: 0.50
+      11: 0.50
+    applyBeforeSkillMultipliers: true
+  teleport:
+    enabled: true
+    warmupSeconds: 5
+    cooldownSeconds: 120
+    cancelOnMove: true
+    combatTagSeconds: 10
+    blockedWorlds: []
+  mode:
+    enabled: false
+    modifiers:
+      CASUAL: 1.0
+      GRINDING: 1.05
+      PVP: 1.02
+      QUESTING: 1.0
+      MINIGAMES: 0.95
+
+messages:
+  actionBarCooldownSeconds: 2
+  actionBar:
+    abilityReady: "&aAbility Ready"
+    abilityActivated: "&6%ability% activated"
+    abilityEnded: "&c%ability% wore off"
+    cooldownRemaining: "&cCooldown: %seconds%s"
+  chat:
+    prefix: "&6[Levely]&r "
+    levelUp: "&a%skill% leveled up to %level%!"
+    noPermission: "&cYou do not have permission."
+    featureLocked: "&cThat party feature is locked until level %level%."
+    wrongPassword: "&cIncorrect party password."
+    partyInvite: "&eYou have been invited to &6%party%&e by &6%player%&e."
+    partyJoin: "&a%player% joined the party."
+    partyLeave: "&e%player% left the party."
+    partyDisband: "&cYour party has been disbanded."
+    reloadComplete: "&aLevely config reloaded."
+    invalidSkill: "&cUnknown skill."
+    invalidPlayer: "&cPlayer not found."

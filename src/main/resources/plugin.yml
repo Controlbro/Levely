@@ -1,0 +1,55 @@
+name: Levely
+main: com.controlbro.levely.LevelyPlugin
+version: 0.1.0-SNAPSHOT
+api-version: '1.21'
+author: Controlbro
+commands:
+  levely:
+    description: Base Levely command.
+    usage: /levely
+    aliases: [lvl, lv]
+    permission: levely.use
+  party:
+    description: Party management command.
+    usage: /party
+    aliases: [p]
+    permission: levely.party.use
+  pc:
+    description: Toggle party chat.
+    usage: /pc
+    permission: levely.party.chat
+  ptp:
+    description: Party teleport.
+    usage: /ptp <member>
+    permission: levely.party.teleport
+permissions:
+  levely.use:
+    default: true
+  levely.party.*:
+    default: true
+    children:
+      levely.party.use: true
+      levely.party.chat: true
+      levely.party.teleport: true
+      levely.party.leader: true
+  levely.party.use:
+    default: true
+  levely.party.chat:
+    default: true
+  levely.party.teleport:
+    default: true
+  levely.party.leader:
+    default: true
+  levely.admin.*:
+    default: op
+    children:
+      levely.admin.reload: true
+      levely.admin.command: true
+  levely.admin.reload:
+    default: op
+  levely.admin.command:
+    default: op
+  levely.bypass.cooldowns:
+    default: op
+  levely.bypass.exploits:
+    default: op

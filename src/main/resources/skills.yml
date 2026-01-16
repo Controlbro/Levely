@@ -1,0 +1,27 @@
+formula:
+  base: 100
+  multiplier: 1.08
+  exponent: 1.2
+skills:
+  mining:
+    unlocks:
+      50: Super Breaker
+  woodcutting:
+    unlocks:
+      50: Tree Feller
+  herbalism:
+    unlocks:
+      25: Green Thumb
+      50: Green Terra
+  excavation:
+    unlocks:
+      50: Giga Drill Breaker
+  swords:
+    unlocks:
+      50: Serrated Strike
+  axes:
+    unlocks:
+      50: Skull Splitter
+  unarmed:
+    unlocks:
+      50: Berserk
