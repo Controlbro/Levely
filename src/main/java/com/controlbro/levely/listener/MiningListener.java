@@ -349,7 +349,7 @@ public class MiningListener implements Listener {
         int duration = (int) Math.min(maxDuration, baseDuration + (level * perLevel));
         int hasteAmplifier = plugin.getConfig().getInt("abilities.actives.mining.superBreaker.hasteAmplifier", 1);
         abilityManager.activateWithoutCooldown(player, displayName);
-        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration * 20, hasteAmplifier, true, false, true));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, duration * 20, hasteAmplifier, true, false, true));
         ActiveAbility active = new ActiveAbility();
         active.task = plugin.getServer().getScheduler().runTaskLater(plugin, () -> endSuperBreaker(player, false), duration * 20L);
         superBreakerActive.put(player.getUniqueId(), active);
@@ -369,7 +369,7 @@ public class MiningListener implements Listener {
         if (active.task != null) {
             active.task.cancel();
         }
-        player.removePotionEffect(PotionEffectType.FAST_DIGGING);
+        player.removePotionEffect(PotionEffectType.HASTE);
         String displayName = plugin.getConfig().getString("abilities.actives.mining.superBreaker.displayName", "Super Breaker");
         Msg.send(player, "abilities.ended", "%ability%", displayName);
         abilityManager.startCooldown(player, "superBreaker");
