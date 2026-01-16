@@ -3,7 +3,7 @@ package com.controlbro.levely.command;
 import com.controlbro.levely.LevelyPlugin;
 import com.controlbro.levely.manager.PartyManager;
 import com.controlbro.levely.model.Party;
-import com.controlbro.levely.util.ChatUtil;
+import com.controlbro.levely.util.Msg;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
@@ -33,41 +33,39 @@ public class PartyTeleportCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.playerOnly")));
+            Msg.send(sender, "errors.playerOnly");
             return true;
         }
         Optional<Party> party = partyManager.getParty(player.getUniqueId());
         if (party.isEmpty()) {
-            sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.notInParty")));
+            Msg.send(sender, "errors.notInParty");
             return true;
         }
         if (args.length < 1) {
-            sender.sendMessage(ChatUtil.color("&cUsage: /ptp <member>"));
+            Msg.send(sender, "party.teleportUsage");
             return true;
         }
         Party current = party.get();
         int unlockLevel = plugin.getConfig().getInt("party.unlocks.partyTeleport", 2);
         if (current.getLevel() < unlockLevel) {
-            sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.featureLocked")
-                .replace("%level%", String.valueOf(unlockLevel))));
+            Msg.send(sender, "errors.featureLocked", "%level%", String.valueOf(unlockLevel));
             return true;
         }
         int cooldownSeconds = plugin.getConfig().getInt("party.teleport.cooldownSeconds", 120);
         Instant last = cooldowns.get(player.getUniqueId());
         if (last != null && Duration.between(last, Instant.now()).getSeconds() < cooldownSeconds) {
             long remaining = cooldownSeconds - Duration.between(last, Instant.now()).getSeconds();
-            sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.teleportCooldown")
-                .replace("%seconds%", String.valueOf(remaining))));
+            Msg.send(sender, "errors.teleportCooldown", "%seconds%", String.valueOf(remaining));
             return true;
         }
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null || !current.getMembers().contains(target.getUniqueId())) {
-            sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.invalidPlayer")));
+            Msg.send(sender, "errors.invalidPlayer");
             return true;
         }
         player.teleport(target.getLocation());
         cooldowns.put(player.getUniqueId(), Instant.now());
-        player.sendMessage(ChatUtil.color("&aTeleported to " + target.getName() + "."));
+        Msg.send(player, "party.teleported", "%player%", target.getName());
         return true;
     }
 

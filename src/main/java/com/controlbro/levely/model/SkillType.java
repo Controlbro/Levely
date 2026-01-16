@@ -33,6 +33,28 @@ public enum SkillType {
         return key;
     }
 
+    public String getDisplayName() {
+        String[] parts = key.split("_");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < parts.length; i++) {
+            if (i > 0) {
+                builder.append(" ");
+            }
+            String part = parts[i];
+            builder.append(part.substring(0, 1).toUpperCase(Locale.ROOT))
+                .append(part.substring(1));
+        }
+        return builder.toString();
+    }
+
+    public String getCategoryKey() {
+        return switch (this) {
+            case MINING, WOODCUTTING, HERBALISM, EXCAVATION, FISHING -> "gathering";
+            case UNARMED, ARCHERY, SWORDS, AXES, TAMING -> "combat";
+            default -> "misc";
+        };
+    }
+
     public static Optional<SkillType> fromString(String input) {
         if (input == null) {
             return Optional.empty();
