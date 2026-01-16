@@ -2,7 +2,7 @@ package com.controlbro.levely.command;
 
 import com.controlbro.levely.LevelyPlugin;
 import com.controlbro.levely.manager.PartyManager;
-import com.controlbro.levely.util.ChatUtil;
+import com.controlbro.levely.util.Msg;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,11 +20,11 @@ public class PartyChatCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(ChatUtil.color(plugin.getMessageManager().getString("errors.playerOnly")));
+            Msg.send(sender, "errors.playerOnly");
             return true;
         }
         boolean enabled = partyManager.togglePartyChat(player);
-        player.sendMessage(ChatUtil.color("&eParty chat " + (enabled ? "enabled" : "disabled") + "."));
+        Msg.send(player, enabled ? "party.chatEnabled" : "party.chatDisabled");
         return true;
     }
 }

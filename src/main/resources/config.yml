@@ -26,6 +26,17 @@ general:
     idleMinutes: 5
     movementRadius: 2.5
 
+ui:
+  xpBossBar:
+    enabled: true
+    hideAfterSeconds: 6
+    titleFormat: "%skill% %xp% (+%delta%xp)"
+    skillNameFormat: "&6%skill%&r"
+    levelUpTitleFormat: "&a%skill% Level Up! &7(Level %level%)"
+    showOnLevelUp: true
+    onlyInSurvival: false
+    updateThrottleTicks: 0
+
 xp:
   formula:
     type: MCMO_LIKE # LINEAR | EXPONENTIAL | MCMO_LIKE
@@ -86,6 +97,60 @@ xp:
     ENDER_DRAGON: 0.0
     WITHER: 0.0
     WITCH: 0.0
+
+events:
+  enabled: true
+  joinAnnounce:
+    enabled: true
+    onlyIfActive: true
+  skills:
+    mining:
+      multiplier: 1.0
+    woodcutting:
+      multiplier: 1.0
+    herbalism:
+      multiplier: 1.0
+    excavation:
+      multiplier: 1.0
+    fishing:
+      multiplier: 1.0
+    unarmed:
+      multiplier: 1.0
+    archery:
+      multiplier: 1.0
+    swords:
+      multiplier: 1.0
+    axes:
+      multiplier: 1.0
+    taming:
+      multiplier: 1.0
+    repair:
+      multiplier: 1.0
+    acrobatics:
+      multiplier: 1.0
+    alchemy:
+      multiplier: 1.0
+    salvage:
+      multiplier: 1.0
+    smelting:
+      multiplier: 1.0
+  categories:
+    gathering:
+      multiplier: 1.0
+    combat:
+      multiplier: 1.0
+    misc:
+      multiplier: 1.0
+  presets:
+    double_xp_global:
+      globalMultiplier: 2.0
+    double_mining:
+      miningMultiplier: 2.0
+    double_woodcutting:
+      woodcuttingMultiplier: 2.0
+  schedule:
+    enabled: false
+    windows: []
 
 skills:
   enabled:
@@ -154,9 +219,28 @@ abilities:
     mining:
       superBreaker:
         enabled: true
+        displayName: Super Breaker
         requiredLevel: 50
         durationSeconds: 12
+        durationSecondsPerLevel: 0.01
+        maxDurationSeconds: 30
         cooldownSeconds: 240
+        hasteAmplifier: 1
+        tripleDrops:
+          baseChance: 0.05
+          chancePerLevel: 0.0005
+          cap: 0.6
+      blastMining:
+        enabled: true
+        requiredLevel: 50
+        range: 6
+        xpMultiplier: 0.35
+        oreDrops:
+          baseChance: 0.3
+          chancePerLevel: 0.0004
+          cap: 0.9
+        debrisDropChance: 0.1
+        oreYieldMultiplier: 1.0
     swords:
       serratedStrike:
         enabled: true
@@ -245,6 +329,18 @@ passives:
       cap: 0.5
       cooldownSeconds: 2
       respectSilkTouch: true
+    biggerBombs:
+      enabled: true
+      thresholds:
+        125: 2
+        375: 3
+        625: 4
+    demolitionsExpertise:
+      enabled: true
+      thresholds:
+        125: 0.25
+        375: 0.50
+        625: 1.0
     tntBonus:
       enabled: false
       xpMultiplier: 0.35
@@ -350,6 +446,9 @@ combatXp:
     dodgeXp: 300
 
 party:
+  chat:
+    useOwnPrefix: false
+  xpBonusMultiplier: 1.0
   maxSize: 20
   invite:
     expireSeconds: 60

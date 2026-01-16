@@ -16,6 +16,9 @@ import com.controlbro.levely.manager.MessageManager;
 import com.controlbro.levely.manager.PartyManager;
 import com.controlbro.levely.manager.PassiveManager;
 import com.controlbro.levely.manager.SkillManager;
+import com.controlbro.levely.manager.XpBossBarManager;
+import com.controlbro.levely.manager.XpEventManager;
+import com.controlbro.levely.util.Msg;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class LevelyPlugin extends JavaPlugin {
@@ -26,6 +29,8 @@ public class LevelyPlugin extends JavaPlugin {
     private PassiveManager passiveManager;
     private PartyManager partyManager;
     private MessageManager messageManager;
+    private XpEventManager xpEventManager;
+    private XpBossBarManager xpBossBarManager;
 
     public static LevelyPlugin getInstance() {
         return instance;
@@ -40,10 +45,13 @@ public class LevelyPlugin extends JavaPlugin {
 
         this.dataManager = new DataManager(this);
         this.messageManager = new MessageManager(this);
-        this.skillManager = new SkillManager(this, dataManager);
+        Msg.init(this);
+        this.partyManager = new PartyManager(this, dataManager);
+        this.xpEventManager = new XpEventManager(this);
+        this.xpBossBarManager = new XpBossBarManager(this);
+        this.skillManager = new SkillManager(this, dataManager, xpEventManager, xpBossBarManager, partyManager);
         this.abilityManager = new AbilityManager(this, dataManager, skillManager);
         this.passiveManager = new PassiveManager(this, dataManager, skillManager);
-        this.partyManager = new PartyManager(this, dataManager);
 
         registerCommands();
         registerListeners();
@@ -59,7 +67,7 @@ public class LevelyPlugin extends JavaPlugin {
     }
 
     private void registerCommands() {
-        LevelyCommand levelyCommand = new LevelyCommand(this, dataManager, skillManager, partyManager, abilityManager);
+        LevelyCommand levelyCommand = new LevelyCommand(this, dataManager, skillManager, partyManager);
         getCommand("levely").setExecutor(levelyCommand);
         getCommand("levely").setTabCompleter(levelyCommand);
 
@@ -76,12 +84,12 @@ public class LevelyPlugin extends JavaPlugin {
     }
 
     private void registerListeners() {
-        getServer().getPluginManager().registerEvents(new MiningListener(this, skillManager), this);
+        getServer().getPluginManager().registerEvents(new MiningListener(this, skillManager, abilityManager, passiveManager, dataManager), this);
         getServer().getPluginManager().registerEvents(new FishingListener(this, skillManager), this);
         getServer().getPluginManager().registerEvents(new CombatListener(this, skillManager, passiveManager, partyManager), this);
         getServer().getPluginManager().registerEvents(new MovementListener(this, skillManager, passiveManager), this);
         getServer().getPluginManager().registerEvents(new CraftingListener(this, skillManager), this);
-        getServer().getPluginManager().registerEvents(new GeneralListener(this, dataManager, partyManager), this);
+        getServer().getPluginManager().registerEvents(new GeneralListener(this, dataManager, partyManager, xpEventManager, xpBossBarManager), this);
     }
 
     public DataManager getDataManager() {
@@ -106,5 +114,13 @@ public class LevelyPlugin extends JavaPlugin {
 
     public MessageManager getMessageManager() {
         return messageManager;
+    }
+
+    public XpEventManager getXpEventManager() {
+        return xpEventManager;
+    }
+
+    public XpBossBarManager getXpBossBarManager() {
+        return xpBossBarManager;
     }
 }
