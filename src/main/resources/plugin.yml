@@ -7,7 +7,7 @@ commands:
   levely:
     description: Base Levely command.
     usage: /levely
-    aliases: [lvl, lv]
+    aliases: [lvl, lv, levels]
     permission: levely.use
   party:
     description: Party management command.

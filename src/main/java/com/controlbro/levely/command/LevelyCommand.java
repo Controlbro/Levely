@@ -106,6 +106,8 @@ public class LevelyCommand implements CommandExecutor, TabCompleter {
                 }
                 plugin.reloadConfig();
                 plugin.getMessageManager().reload();
+                plugin.getSkillsConfigManager().reload();
+                plugin.getFishingManager().reload();
                 Msg.send(sender, "admin.reloadComplete");
                 return true;
             }

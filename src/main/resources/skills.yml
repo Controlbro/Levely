@@ -25,3 +25,269 @@ skills:
   unarmed:
     unlocks:
       50: Berserk
+fishing:
+  treasureHunter:
+    requiredLevel: 10
+    tiers:
+      1:
+        level: 10
+        chance:
+          Common: 7.50
+          Uncommon: 1.25
+          Rare: 0.25
+          Epic: 0.10
+          Legendary: 0.01
+          Mythic: 0.01
+      2:
+        level: 25
+        chance:
+          Common: 6.50
+          Uncommon: 1.75
+          Rare: 0.75
+          Epic: 0.50
+          Legendary: 0.05
+          Mythic: 0.01
+      3:
+        level: 35
+        chance:
+          Common: 3.50
+          Uncommon: 2.75
+          Rare: 1.25
+          Epic: 1.00
+          Legendary: 0.10
+          Mythic: 0.01
+      4:
+        level: 50
+        chance:
+          Common: 2.00
+          Uncommon: 3.50
+          Rare: 2.25
+          Epic: 1.50
+          Legendary: 1.00
+          Mythic: 0.01
+      5:
+        level: 65
+        chance:
+          Common: 1.50
+          Uncommon: 3.75
+          Rare: 2.50
+          Epic: 2.00
+          Legendary: 1.00
+          Mythic: 0.01
+      6:
+        level: 75
+        chance:
+          Common: 1.00
+          Uncommon: 3.25
+          Rare: 3.75
+          Epic: 2.50
+          Legendary: 1.50
+          Mythic: 0.05
+      7:
+        level: 85
+        chance:
+          Common: 0.25
+          Uncommon: 2.75
+          Rare: 4.00
+          Epic: 5.00
+          Legendary: 2.50
+          Mythic: 0.10
+      8:
+        level: 100
+        chance:
+          Common: 0.10
+          Uncommon: 1.50
+          Rare: 6.00
+          Epic: 7.50
+          Legendary: 5.00
+          Mythic: 0.25
+    loot:
+      Common:
+        LEATHER_HELMET:
+          weight: 1
+          amount: 1
+        LEATHER_CHESTPLATE:
+          weight: 1
+          amount: 1
+        LEATHER_LEGGINGS:
+          weight: 1
+          amount: 1
+        LEATHER_BOOTS:
+          weight: 1
+          amount: 1
+        WOODEN_PICKAXE:
+          weight: 1
+          amount: 1
+        WOODEN_AXE:
+          weight: 1
+          amount: 1
+        WOODEN_SHOVEL:
+          weight: 1
+          amount: 1
+        WOODEN_HOE:
+          weight: 1
+          amount: 1
+        WOODEN_SWORD:
+          weight: 1
+          amount: 1
+        LAPIS_LAZULI:
+          weight: 1
+          amount: 20
+        GOLDEN_HELMET:
+          weight: 1
+          amount: 1
+        GOLDEN_CHESTPLATE:
+          weight: 1
+          amount: 1
+        GOLDEN_LEGGINGS:
+          weight: 1
+          amount: 1
+        GOLDEN_BOOTS:
+          weight: 1
+          amount: 1
+        IRON_INGOT:
+          weight: 1
+          amount: 5
+        GOLD_INGOT:
+          weight: 1
+          amount: 5
+      Uncommon:
+        STONE_PICKAXE:
+          weight: 1
+          amount: 1
+        STONE_AXE:
+          weight: 1
+          amount: 1
+        STONE_SHOVEL:
+          weight: 1
+          amount: 1
+        STONE_HOE:
+          weight: 1
+          amount: 1
+        STONE_SWORD:
+          weight: 1
+          amount: 1
+        GOLDEN_PICKAXE:
+          weight: 1
+          amount: 1
+        GOLDEN_AXE:
+          weight: 1
+          amount: 1
+        GOLDEN_SHOVEL:
+          weight: 1
+          amount: 1
+        GOLDEN_HOE:
+          weight: 1
+          amount: 1
+        GOLDEN_SWORD:
+          weight: 1
+          amount: 1
+        BLAZE_ROD:
+          weight: 1
+          amount: 1
+        NAME_TAG:
+          weight: 1
+          amount: 1
+      Rare:
+        IRON_SWORD:
+          weight: 1
+          amount: 1
+        IRON_PICKAXE:
+          weight: 1
+          amount: 1
+        IRON_AXE:
+          weight: 1
+          amount: 1
+        IRON_SHOVEL:
+          weight: 1
+          amount: 1
+        IRON_HOE:
+          weight: 1
+          amount: 1
+        BOW:
+          weight: 1
+          amount: 1
+        ENDER_PEARL:
+          weight: 1
+          amount: 1
+      Epic:
+        IRON_HELMET:
+          weight: 1
+          amount: 1
+        IRON_CHESTPLATE:
+          weight: 1
+          amount: 1
+        IRON_LEGGINGS:
+          weight: 1
+          amount: 1
+        IRON_BOOTS:
+          weight: 1
+          amount: 1
+        GHAST_TEAR:
+          weight: 1
+          amount: 1
+        DIAMOND:
+          weight: 1
+          amount: 5
+      Legendary:
+        DIAMOND_HELMET:
+          weight: 1
+          amount: 1
+        DIAMOND_CHESTPLATE:
+          weight: 1
+          amount: 1
+        DIAMOND_LEGGINGS:
+          weight: 1
+          amount: 1
+        DIAMOND_BOOTS:
+          weight: 1
+          amount: 1
+        DIAMOND_PICKAXE:
+          weight: 1
+          amount: 1
+        DIAMOND_AXE:
+          weight: 1
+          amount: 1
+        DIAMOND_SHOVEL:
+          weight: 1
+          amount: 1
+        DIAMOND_HOE:
+          weight: 1
+          amount: 1
+        DIAMOND_SWORD:
+          weight: 1
+          amount: 1
+        NETHERITE_SCRAP:
+          weight: 1
+          amount: 1
+        ENCHANTED_BOOK:
+          weight: 1
+          amount: 1
+      Mythic:
+        NETHERITE_HELMET:
+          weight: 1
+          amount: 1
+        NETHERITE_CHESTPLATE:
+          weight: 1
+          amount: 1
+        NETHERITE_LEGGINGS:
+          weight: 1
+          amount: 1
+        NETHERITE_BOOTS:
+          weight: 1
+          amount: 1
+        NETHERITE_PICKAXE:
+          weight: 1
+          amount: 1
+        NETHERITE_AXE:
+          weight: 1
+          amount: 1
+        NETHERITE_SHOVEL:
+          weight: 1
+          amount: 1
+        NETHERITE_HOE:
+          weight: 1
+          amount: 1
+        NETHERITE_SWORD:
+          weight: 1
+          amount: 1

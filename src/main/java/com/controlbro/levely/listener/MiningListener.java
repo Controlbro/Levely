@@ -282,6 +282,10 @@ public class MiningListener implements Listener {
         if (config == null) {
             return;
         }
+        if (skill == SkillType.WOODCUTTING && org.bukkit.Tag.LEAVES.isTagged(type)
+            && !plugin.getConfig().getBoolean("skillXp.woodcuttingLeaves.enabled", false)) {
+            return;
+        }
         if (!config.contains(type.name())) {
             return;
         }
