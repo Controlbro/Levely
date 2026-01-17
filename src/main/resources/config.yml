@@ -37,6 +37,19 @@ ui:
     onlyInSurvival: false
     updateThrottleTicks: 0
 
+gui:
+  enabled: true
+  filler:
+    material: BLACK_STAINED_GLASS_PANE
+    name: " "
+  sounds:
+    click: UI_BUTTON_CLICK
+    open: BLOCK_CHEST_OPEN
+    close: BLOCK_CHEST_CLOSE
+  progressBar:
+    filled: LIME_STAINED_GLASS_PANE
+    empty: RED_STAINED_GLASS_PANE
+
 xp:
   formula:
     type: MCMO_LIKE # LINEAR | EXPONENTIAL | MCMO_LIKE
@@ -204,6 +217,86 @@ abilities:
         requiredLevel: 50
         durationSeconds: 12
         cooldownSeconds: 240
+    fishing:
+      shake:
+        enabled: true
+        displayName: Shake
+        requiredLevel: 15
+        cooldowns:
+          playerSeconds: 240
+          targetSeconds: 60
+        damagePercent: 0.25
+        maxDamage: 10
+        dropTables:
+          CREEPER:
+            GUNPOWDER:
+              weight: 99
+              amount: 1
+          ENDERMAN:
+            ENDER_PEARL:
+              weight: 100
+              amount: 1
+          SKELETON:
+            ARROW:
+              weight: 49
+              amount: 1
+            BONE:
+              weight: 49
+              amount: 1
+          ZOMBIE:
+            ROTTEN_FLESH:
+              weight: 98
+              amount: 1
+          WITHER_SKELETON:
+            BONE:
+              weight: 49
+              amount: 1
+            COAL:
+              weight: 49
+              amount: 1
+          WITCH:
+            GLASS_BOTTLE:
+              weight: 35
+              amount: 1
+            REDSTONE:
+              weight: 20
+              amount: 1
+            GLOWSTONE_DUST:
+              weight: 15
+              amount: 1
+            GUNPOWDER:
+              weight: 15
+              amount: 1
+            SPIDER_EYE:
+              weight: 10
+              amount: 1
+            POTION:
+              weight: 5
+              amount: 1
+          SHULKER:
+            PURPUR_BLOCK:
+              weight: 75
+              amount: 1
+            SHULKER_SHELL:
+              weight: 25
+              amount: 1
+        skullDrops:
+          CREEPER:
+            enabled: true
+            chance: 0.01
+            material: CREEPER_HEAD
+          SKELETON:
+            enabled: true
+            chance: 0.02
+            material: SKELETON_SKULL
+          ZOMBIE:
+            enabled: true
+            chance: 0.02
+            material: ZOMBIE_HEAD
+          WITHER_SKELETON:
+            enabled: true
+            chance: 0.02
+            material: WITHER_SKELETON_SKULL
     woodcutting:
       treeFeller:
         enabled: true
@@ -389,18 +482,198 @@ passives:
       cooldownSeconds: 1
       extraIngotMultiplier: 1.0
       xpBonusMultiplier: 0.2
+  fishing:
+    treasureHunter:
+      enabled: true
+    iceFishing:
+      requiredLevel: 0
+      allowedBlocks: [ICE, PACKED_ICE, BLUE_ICE]
+    masterAngler:
+      requiredLevel: 15
+      baseBiteBonus: 0.1
+      boatBonusMultiplier: 1.5
+    fishermansDiet:
+      enabled: true
+      ranks:
+        1:
+          level: 20
+          hungerBonus: 1
+        2:
+          level: 40
+          hungerBonus: 2
+        3:
+          level: 60
+          hungerBonus: 3
+        4:
+          level: 80
+          hungerBonus: 4
+        5:
+          level: 100
+          hungerBonus: 5
+    magicHunter:
+      enabled: true
+      requiredLevel: 20
+      baseChance: 0.02
+      chancePerLevel: 0.0004
+      cap: 0.35
+  repair:
+    arcaneForging:
+      enabled: true
+      allowDowngrade: true
+      ranks:
+        1:
+          level: 125
+          keepChance: 0.0
+          downgradeChance: 0.9
+        2:
+          level: 250
+          keepChance: 0.1
+          downgradeChance: 0.8
+        3:
+          level: 350
+          keepChance: 0.1
+          downgradeChance: 0.7
+        4:
+          level: 500
+          keepChance: 0.2
+          downgradeChance: 0.6
+        5:
+          level: 625
+          keepChance: 0.3
+          downgradeChance: 0.5
+        6:
+          level: 750
+          keepChance: 0.4
+          downgradeChance: 0.4
+        7:
+          level: 875
+          keepChance: 0.5
+          downgradeChance: 0.3
+        8:
+          level: 1000
+          keepChance: 0.6
+          downgradeChance: 0.1
+
+fishing:
+  categories:
+    fish:
+      - COD
+      - SALMON
+      - PUFFERFISH
+      - TROPICAL_FISH
+    treasure:
+      - NAME_TAG
+      - SADDLE
+      - BOW
+      - FISHING_ROD
+      - ENCHANTED_BOOK
+      - NAUTILUS_SHELL
+    junk:
+      - LEATHER
+      - LEATHER_BOOTS
+      - ROTTEN_FLESH
+      - STICK
+      - STRING
+      - BOWL
+      - BONE
+      - INK_SAC
+      - TRIPWIRE_HOOK
+      - LILY_PAD
+      - BAMBOO
+
+repair:
+  restorePercentPerLevel: 0.0004
+  maxRestorePercent: 1.0
+  materialMultipliers:
+    WOOD: 0.4
+    COBBLESTONE: 0.4
+    IRON: 1.0
+    GOLD: 1.4
+    DIAMOND: 1.8
+    STRING: 1.0
+  items:
+    IRON_HELMET:
+      material: IRON_INGOT
+      restorePercent: 0.2
+      materialCategory: IRON
+    IRON_CHESTPLATE:
+      material: IRON_INGOT
+      restorePercent: 0.125
+      materialCategory: IRON
+    IRON_LEGGINGS:
+      material: IRON_INGOT
+      restorePercent: 0.1428
+      materialCategory: IRON
+    IRON_BOOTS:
+      material: IRON_INGOT
+      restorePercent: 0.25
+      materialCategory: IRON
+    IRON_AXE:
+      material: IRON_INGOT
+      restorePercent: 0.333
+      materialCategory: IRON
+    IRON_PICKAXE:
+      material: IRON_INGOT
+      restorePercent: 0.333
+      materialCategory: IRON
+    IRON_SWORD:
+      material: IRON_INGOT
+      restorePercent: 0.5
+      materialCategory: IRON
+    IRON_HOE:
+      material: IRON_INGOT
+      restorePercent: 0.5
+      materialCategory: IRON
+    IRON_SHOVEL:
+      material: IRON_INGOT
+      restorePercent: 1.0
+      materialCategory: IRON
+    SHEARS:
+      material: IRON_INGOT
+      restorePercent: 0.5
+      materialCategory: IRON
+    FISHING_ROD:
+      material: STRING
+      restorePercent: 0.5
+      materialCategory: STRING
+    BOW:
+      material: STRING
+      restorePercent: 0.333
+      materialCategory: STRING
 
 skillXp:
+  woodcuttingLeaves:
+    enabled: false
   mining:
     STONE: 5
+    DEEPSLATE: 6
+    COBBLED_DEEPSLATE: 5
+    TUFF: 5
+    GRANITE: 5
+    DIORITE: 5
+    ANDESITE: 5
+    CALCITE: 6
+    BASALT: 6
+    BLACKSTONE: 6
     COAL_ORE: 10
-    COPPER_ORE: 12
+    DEEPSLATE_COAL_ORE: 11
     IRON_ORE: 16
+    DEEPSLATE_IRON_ORE: 18
+    COPPER_ORE: 12
+    DEEPSLATE_COPPER_ORE: 13
     GOLD_ORE: 24
+    DEEPSLATE_GOLD_ORE: 26
+    REDSTONE_ORE: 18
+    DEEPSLATE_REDSTONE_ORE: 20
+    LAPIS_ORE: 18
+    DEEPSLATE_LAPIS_ORE: 20
     DIAMOND_ORE: 40
+    DEEPSLATE_DIAMOND_ORE: 44
     EMERALD_ORE: 45
+    DEEPSLATE_EMERALD_ORE: 48
     NETHER_QUARTZ_ORE: 15
     NETHER_GOLD_ORE: 18
+    ANCIENT_DEBRIS: 80
   woodcutting:
     OAK_LOG: 10
     SPRUCE_LOG: 10
@@ -410,6 +683,8 @@ skillXp:
     DARK_OAK_LOG: 12
     MANGROVE_LOG: 14
     CHERRY_LOG: 14
+    CRIMSON_STEM: 16
+    WARPED_STEM: 16
   herbalism:
     WHEAT: 10
     CARROTS: 8
@@ -418,10 +693,16 @@ skillXp:
     COCOA: 10
   excavation:
     DIRT: 4
+    GRASS_BLOCK: 4
+    COARSE_DIRT: 4
+    ROOTED_DIRT: 4
+    MUD: 5
     SAND: 4
+    RED_SAND: 4
     GRAVEL: 5
     CLAY: 6
     SOUL_SAND: 6
+    SOUL_SOIL: 6
   fishing:
     fish: 40
     junk: 10
